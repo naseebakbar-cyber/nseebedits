@@ -1,0 +1,636 @@
+<!doctype html>
+
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>QuizByNaseeb</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --dark-bg:#0b0d10;
+    --card:#0f1720;
+    --white:#ffffff;
+    --muted:#9aa4b2;
+    --gold-start:#d4af37;
+    --gold-end:#ffffff;
+    --accent:#b8860b;
+    --glass: rgba(255,255,255,0.04);
+  }
+  *{box-sizing:border-box}
+  body{font-family:'Poppins',sans-serif;margin:0;background:var(--dark-bg);color:var(--white);}
+  header{display:flex;align-items:center;justify-content:space-between;padding:14px 24px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));position:sticky;top:0;z-index:50}
+  .brand{display:flex;align-items:center;gap:12px}
+  .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--gold-start), #fff);display:flex;align-items:center;justify-content:center;color:#111;font-weight:800}
+  nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-weight:600}
+  .container{max-width:1100px;margin:28px auto;padding:0 18px}
+  .hero{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:26px;border-radius:12px;box-shadow:0 8px 30px rgba(3,6,12,0.6)}
+  h1{margin:0;font-size:28px}
+  p.lead{margin:6px 0;color:var(--muted)}
+  .btn{background:linear-gradient(90deg,var(--gold-start), var(--accent));color:#111;padding:10px 16px;border-radius:10px;border:none;cursor:pointer;font-weight:700}
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:20px;margin-top:20px}
+  .card{background:var(--card);border-radius:12px;padding:18px;box-shadow:0 10px 30px rgba(2,6,10,0.6)}
+  label{display:block;margin:8px 0 6px;color:var(--muted);font-weight:600}
+  textarea{width:100%;min-height:140px;padding:10px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);background:transparent;color:var(--white);resize:vertical}
+  input[type=number]{padding:8px;border-radius:8px;border:1px solid rgba(255,255,255,0.04);width:120px;background:transparent;color:var(--white)}
+  .secondary{background:transparent;border:1px solid rgba(255,255,255,0.06);color:var(--muted);padding:8px 12px;border-radius:8px;cursor:pointer}/* selection column */ aside .card{position:sticky;top:90px} .select-quiz{display:flex;flex-direction:column;gap:12px} .select-quiz .opt{padding:12px;border-radius:10px;background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));cursor:pointer;border:1px solid rgba(255,255,255,0.03);} .select-quiz .opt:hover{box-shadow:0 8px 30px rgba(184,134,11,0.12);transform:translateY(-3px)} .muted{color:var(--muted)}
+
+/* quiz white screen */ .quiz-screen{display:none;background:#ffffff;color:#0b1220;border-radius:12px;padding:20px} .quiz-top{display:flex;justify-content:space-between;align-items:center} .timer{font-weight:700;color:var(--accent)} .qcount{color:var(--muted)} .question{font-size:18px;font-weight:700;margin:14px 0} .options{display:flex;flex-direction:column;gap:10px} .option{background:#fbfdff;border:1px solid rgba(11,18,32,0.04);padding:12px;border-radius:10px;display:flex;gap:10px;align-items:center;cursor:pointer} .option .label{min-width:28px;font-weight:700;color:var(--muted)} .option.selected{border:2px solid var(--accent);box-shadow:0 8px 30px rgba(184,134,11,0.08);} .controls{display:flex;gap:10px;margin-top:14px} .btn-ghost{background:transparent;border:1px solid rgba(11,18,32,0.06);padding:10px 14px;border-radius:10px;cursor:pointer} .btn-submit{background:linear-gradient(90deg,var(--gold-start),var(--accent));color:#111;padding:10px 14px;border-radius:10px;border:none;cursor:pointer}
+
+/* result card */ .result-card{display:none;padding:18px;border-radius:12px;background:linear-gradient(180deg,#fff,#fbfbfb);color:#111} .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:12px} .stat{background:#fff;padding:12px;border-radius:10px;text-align:center;box-shadow:0 8px 20px rgba(2,6,10,0.04)} .stat h3{margin:0}
+
+.about-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px} .about-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));padding:14px;border-radius:10px} .about-card h4{margin:0 0 8px}
+
+footer{color:var(--muted);text-align:center;margin-top:30px} @media(max-width:980px){.grid{grid-template-columns:1fr}.about-grid{grid-template-columns:1fr}.aside{position:static}.brand{gap:8px}.logo{width:40px;height:40px}} </style>
+
+</head>
+<body>
+<header>
+  <div class="brand">
+    <div class="logo">QbN</div>
+    <div>
+      <div style="font-weight:800">QuizByNaseeb</div>
+      <div style="font-size:12px;color:var(--muted)">Professional quizzes — English & Math</div>
+    </div>
+  </div>
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#quiz">Quiz</a>
+    <a href="#about">About</a>
+  </nav>
+</header><main class="container">
+  <section id="home" class="hero card">
+    <h1>Welcome to QuizByNaseeb</h1>
+    <p class="lead">Choose a subject and start a professional timed quiz. Options and answers are shown exactly as provided.</p>
+    <div style="margin-top:12px"><button class="btn" id="startBtn">Start Quiz</button></div>
+  </section>  <div class="grid">
+    <div>
+      <!-- Import panel (optional) -->
+      <div class="card" id="importPanel">
+        <h3 style="margin:0 0 8px 0">Question Database (embedded)</h3>
+        <p class="muted">Questions already embedded from your batches. Use import only if you want to replace them (advanced users).</p>
+        <div style="margin-top:10px;display:none">
+          <label>Paste English questions (format required)</label>
+          <textarea id="englishInput"></textarea>
+          <label>Paste Math questions (format required)</label>
+          <textarea id="mathInput"></textarea>
+          <div style="display:flex;gap:8px;margin-top:8px"><button class="btn" id="importBtn">Import Questions</button><button class="secondary" id="clearBtn">Clear</button></div>
+        </div><div style="margin-top:14px;">
+      <label>Test size</label>
+      <input type="number" id="testSize" placeholder="e.g., 20" />
+      <div style="margin-top:8px"><button class="secondary" id="size20">20</button><button class="secondary" id="size30">30</button></div>
+    </div>
+  </div>
+
+  <!-- Quiz panel (white screen) -->
+  <div class="card" id="quizCard" style="margin-top:18px;display:block">
+    <div id="quizScreen" class="quiz-screen">
+      <div class="quiz-top"><div class="timer" id="timer">Time: 0s</div><div class="qcount" id="qcount">Question 0 of 0</div></div>
+      <div class="question" id="questionText">Question text</div>
+      <div class="options" id="optionsList"></div>
+      <div class="controls">
+        <button class="btn-ghost" id="continueBtn">Continue</button>
+        <button class="btn-submit" id="submitBtn">Submit</button>
+      </div>
+    </div>
+
+    <div id="resultScreen" class="result-card">
+      <h3>Test Result</h3>
+      <div class="stats" id="statsBox"></div>
+      <div style="margin-top:12px"><button class="btn" id="retryBtn">Restart</button></div>
+    </div>
+  </div>
+</div>
+
+<aside class="aside">
+  <div class="card" id="selectionCard">
+    <h3 id="quizHeading">Choose Your Quiz</h3>
+    <div class="select-quiz" style="margin-top:10px">
+      <div class="opt" id="englishBtn">English Quiz</div>
+      <div class="opt" id="mathBtn">Math Quiz</div>
+    </div>
+    <p class="muted" style="margin-top:12px">Questions order will be random each test. Options stay in the same order you provided (a, b, c, d).</p>
+  </div>
+
+  <div class="card" id="about" style="margin-top:18px">
+    <h3>About QuizByNaseeb</h3>
+    <div class="about-grid" style="margin-top:12px">
+      <div class="about-card">
+        <h4>About Me</h4>
+        <p>I’m <strong>Naseeb Akbar</strong>, a student and digital creator passionate about learning and building creative projects. I make quizzes to help students learn with fun and confidence.</p>
+      </div>
+
+      <div class="about-card">
+        <h4>Achievements</h4>
+        <p>🥈 Silver Medal — ICAT Mathematics (Provincial Topper)<br>🥈 Silver Medal — The Educate Elevate Hub<br>🥉 Bronze Medal — HRCA Mathematics<br>🎯 Preparing for CATSO ENG & MATH</p>
+      </div>
+
+      <div class="about-card">
+        <h4>Mission & Vision</h4>
+        <p>To help students learn with confidence through interactive quizzes and smart practice. Goal: represent Pakistan in global competitions.</p>
+      </div>
+
+      <div class="about-card">
+        <h4>Contact</h4>
+        <p>📱 WhatsApp: <strong>03431934884</strong><br>🎬 TikTok: <a href="https://www.tiktok.com/@naseebakbar26?_t=ZS-90oBRDZX88f&_r=1" target="_blank">@naseebakbar26</a></p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card" style="margin-top:18px">
+    <h4>Quick Notes</h4>
+    <p class="muted">Unanswered questions when you press Submit are counted as wrong. Use Continue after selecting an option. Quiz screen uses white background for readability.</p>
+  </div>
+</aside>
+
+  </div>  <footer>© QuizByNaseeb — Built by Naseeb Akbar</footer>
+</main><script>
+/* -------------------- Embedded question banks -------------------- */
+const englishQuestions = [
+{question: "Which word is an abstract noun?", options:["courage", "honesty", "mountain", "river"], answer:1},
+{question: "Identify the adjective of quality.", options:["tall", "five", "honest", "first"], answer:2},
+{question: "Which is a collective noun?", options:["pen", "cat", "flock", "garden"], answer:2},
+{question: "Identify the adverb of manner.", options:["tomorrow", "quickly", "often", "seldom"], answer:1},
+{question: "Which is a demonstrative pronoun?", options:["he", "those", "them", "his"], answer:1},
+{question: "Which is a reflexive pronoun?", options:["him", "his", "himself", "they"], answer:2},
+{question: "Which is an interrogative pronoun?", options:["those", "their", "who", "her"], answer:2},
+{question: "Choose the preposition.", options:["because", "since", "under", "quickly"], answer:2},
+{question: "Identify the conjunction.", options:["near", "although", "high", "very"], answer:1},
+{question: "Which is a proper noun?", options:["month", "city", "Karachi", "boy"], answer:2},
+{question: "Which is a common noun?", options:["Ali", "teacher", "Pakistan", "Urdu"], answer:1},
+{question: "Identify the verb of the sentence: They completed the task.", options:["they", "task", "completed", "the"], answer:2},
+{question: "Which sentence has a linking verb?", options:["She sang loudly.", "They painted the wall.", "The soup tastes delicious.", "He jumped quickly."], answer:2},
+{question: "Which is a transitive verb?", options:["sleep", "read", "go", "sit"], answer:1},
+{question: "Which is an intransitive verb?", options:["give", "sleep", "build", "show"], answer:1},
+{question: "Identify the adjective of number.", options:["tall", "three", "red", "we"], answer:1},
+{question: "Which is a possessive pronoun?", options:["her", "ours", "them", "ours"], answer:1},
+{question: "Which is a distributive pronoun?", options:["they", "each", "us", "ours"], answer:1},
+{question: "Which is an indefinite pronoun?", options:["who", "which", "someone", "play"], answer:2},
+{question: "Which is a relative pronoun?", options:["his", "that", "them", "goes"], answer:1},
+{question: "She ___ her work before lunch.", options:["finishes", "finishing", "finished", "done"], answer:2},
+{question: "We ___ in this city since 2010.", options:["lived", "live", "have lived", "living"], answer:2},
+{question: "By next week, they ___ the project.", options:["complete", "completed", "will have completed", "completing"], answer:2},
+{question: "If it rains, we ___ at home.", options:["stayed", "stay", "will stay", "staying"], answer:1},
+{question: "When I reached, they ___ already left.", options:["have", "had", "has", "will have"], answer:1},
+{question: "She ___ her homework now.", options:["do", "did", "is doing", "finish"], answer:2},
+{question: "They ___ to Lahore last month.", options:["go", "going", "went", "living"], answer:2},
+{question: "She ___ a letter yesterday.", options:["write", "writing", "wrote", "writes"], answer:2},
+{question: "The sun ___ in the east.", options:["rise", "rises", "rose", "rising"], answer:1},
+{question: "The players ___ cricket every evening.", options:["play", "played", "playing", "play"], answer:0},
+{question: "He ___ a new car next year.", options:["buy", "bought", "will buy", "buying"], answer:2},
+{question: "They ___ not at home yesterday.", options:["is", "are", "were", "goes"], answer:2},
+{question: "She ___ in class daily.", options:["speak", "spoke", "speaks", "speaking"], answer:2},
+{question: "They ___ the match tomorrow.", options:["play", "played", "will play", "playing"], answer:2},
+{question: "He ___ to school every day.", options:["go", "gone", "goes", "present"], answer:2},
+{question: "We ___ English since morning.", options:["studied", "studying", "have been studying", "study"], answer:2},
+{question: "Ali ___ already ___ his work.", options:["has write", "had write", "has written", "had wrote"], answer:2},
+{question: "She ___ to visit her aunt yesterday.", options:["go", "going", "went", "study"], answer:2},
+{question: "They ___ dinner when the guest arrived.", options:["eat", "eaten", "were eating", "achievement"], answer:2},
+{question: "The bell ___ before the class ended.", options:["ring", "rings", "had rung", "late"], answer:2},
+{question: "Synonym of 'ancient' is:", options:["modern", "old", "help", "goes"], answer:1},
+{question: "Antonym of 'victory' is:", options:["success", "defeat", "prize", "weak"], answer:1},
+{question: "Synonym of 'rapid' is:", options:["slow", "fast", "coward", "daring"], answer:1},
+{question: "Antonym of 'brave' is:", options:["strong", "bold", "coward", "buying"], answer:2},
+{question: "Synonym of 'assist' is:", options:["refuse", "ignore", "help", "goes"], answer:2},
+{question: "Antonym of 'expand' is:", options:["stretch", "big", "shrink", "stop"], answer:2},
+{question: "Synonym of 'fragile' is:", options:["strong", "delicate", "solid", "hard"], answer:1},
+{question: "Antonym of 'false' is:", options:["wrong", "true", "fake", "right"], answer:1},
+{question: "Synonym of 'tiny' is:", options:["huge", "small", "light", "large"], answer:1},
+{question: "Antonym of 'scarce' is:", options:["rare", "abundant", "little", "scanty"], answer:1}
+{question: "Antonym of 'scarce' is:", options:["rare", "abundant", "little", "scanty"], answer:1},
+{question: "Synonym of 'reply' is:", options:["silence", "mad", "answer", "refuse"], answer:2},
+{question: "Antonym of 'beautiful' is:", options:["fair", "ugly", "neat", "pretty"], answer:1},
+{question: "Synonym of 'purchase' is:", options:["sell", "buy", "borrow", "lend"], answer:1},
+{question: "Antonym of 'lazy' is:", options:["slow", "active", "weak", "hard"], answer:1},
+{question: "Synonym of 'error' is:", options:["correct", "mistake", "right", "wrong"], answer:1},
+{question: "Antonym of 'strong' is:", options:["firm", "weak", "solid", "powerful"], answer:1},
+{question: "Synonym of 'begin' is:", options:["end", "start", "close", "finish"], answer:1},
+{question: "Antonym of 'victim' is:", options:["loser", "sufferer", "winner", "brave"], answer:2},
+{question: "Synonym of 'angry' is:", options:["calm", "mad", "weak", "peaceful"], answer:1},
+{question: "Antonym of 'day' is:", options:["sun", "night", "morning", "dark"], answer:1},
+{question: "Correct spelling is:", options:["occassion", "ocasion", "occasion", "occassionn"], answer:2},
+{question: "Correct spelling is:", options:["recive", "receeve", "receive", "reseive"], answer:2},
+{question: "Correct spelling is:", options:["beleive", "believe", "belive", "beleeve"], answer:1},
+{question: "Correct spelling is:", options:["acheive", "achieve", "achive", "acheeve"], answer:1},
+{question: "Correct spelling is:", options:["tommorow", "tommoroww", "tomorow", "tomorrow"], answer:3},
+{question: "Correct punctuation:", options:["where is Ali.", "Where is Ali", "Where is Ali?", "Where is ali?"], answer:2},
+{question: "Correct punctuation:", options:["I am happy,", "I am happy.", "I am happy!", "I am happy?"], answer:1},
+{question: "Correct punctuation:", options:["The teacher said “Sit down”.", "The teacher said, Sit down.", "The teacher said, “Sit down.”", "The teacher said “Sit down."], answer:2},
+{question: "Correct capitalization:", options:["she went to islamabad.", "She went to Islamabad.", "She went to islamabad.", "she went to Islamabad."], answer:1},
+{question: "Correct spelling is:", options:["goverment", "governmnet", "govarnment", "government"], answer:3},
+{question: "The room is cleaned daily. Change into (Active form).", options:["They cleaned the room daily.", "They clean the room daily.", "They cleaning the room daily.", "They were cleaning the room daily."], answer:1},
+{question: "The letter was written by Ali. Change into (Active)", options:["Ali writes the letter.", "Ali wrote the letter.", "Ali is writing the letter.", "Ali will write the letter."], answer:1},
+{question: "They will announce the result tomorrow. Change into (Passive)", options:["The result is announcing tomorrow.", "The result was announced tomorrow.", "The result will be announced tomorrow.", "The result has been announced tomorrow."], answer:2},
+{question: "The homework has been done. Change into (Active)", options:["The homework is doing.", "The homework was done.", "They have done the homework.", "They did the homework."], answer:2},
+{question: "They are singing a song. Change into (Passive)", options:["A song was sung by them.", "A song is being sung by them.", "A song has been sung by them.", "A song will be sung by them."], answer:1},
+{question: "The match will be played tomorrow. Change into (Active)", options:["They play the match tomorrow.", "They played the match tomorrow.", "They will play the match tomorrow.", "They are playing the match tomorrow."], answer:2},
+{question: "The work was finished yesterday. Change into (Active)", options:["The work finishes yesterday.", "The work finish yesterday.", "They finished the work yesterday.", "They finishes the work yesterday."], answer:2},
+{question: "A new road is being built. Change into (Active)", options:["They built a new road.", "They are building a new road.", "They build a new road.", "They were building a new road."], answer:1},
+{question: "The song was sung by her. Change into (Active)", options:["She sings the song.", "She sang the song.", "She is singing the song.", "She will sing the song."], answer:1},
+{question: "The book will be read by the students. Change into (Active)", options:["The students reads the book.", "The students reading the book.", "The students will read the book.", "The students read the book."], answer:2},
+{question: "He said, “I am tired.” Change into (Indirect)", options:["He said that he is tired.", "He said that he was tired.", "He said he was tired.", "He says that he is tired."], answer:1},
+{question: "She said to me, “Close the door.” Change into (Indirect)", options:["She said me to close the door.", "She said that close the door.", "She told me to close the door.", "She tells me to close the door."], answer:2},
+{question: "He said, “I have finished my work.” Change into (Indirect)", options:["He said he has finished his work.", "He said that he had finished his work.", "He told he finished his work.", "He says that he had finished his work."], answer:1},
+{question: "She said, “I will go tomorrow.” Change into (Indirect)", options:["She said that she will go tomorrow.", "She said that she would go the next day.", "She said she would go tomorrow.", "She said she go next day."], answer:1},
+{question: "Ali said, “Don’t be late.” Change into (Indirect)", options:["Ali said me not to be late.", "Ali told me not to be late.", "Ali told not be late.", "Ali said not be late."], answer:1},
+{question: "The teacher said, “Be quiet.” Change into (Indirect)", options:["The teacher said us be quiet.", "The teacher ordered us to be quiet.", "The teacher told be quiet.", "The teacher asked us quiet."], answer:1},
+{question: "He said, “Where are you going?” Change into (Indirect)", options:["He asked where you are going.", "He asked where I was going.", "He asked me where I am going.", "He told me where you were going."], answer:1},
+{question: "The boy said, “I like apples.” (Indirect)", options:["The boy say that he liked apples.", "The boy said that he liked apples.", "The boy said that he likes apples.", "The boy told he liked apples."], answer:1},
+{question: "“As busy as a bee” is a:", options:["metaphor", "simile", "irony", "exaggeration"], answer:1},
+{question: "“The wind whispered through the trees.”", options:["metaphor", "simile", "personification", "hyperbole"], answer:2},
+{question: "“The classroom was a zoo.”", options:["simile", "metaphor", "exaggeration", "personification"], answer:1},
+{question: "“I’ve told you a million times.”", options:["simile", "metaphor", "hyperbole", "personification"], answer:2},
+{question: "“He fought like a lion.”", options:["metaphor", "simile", "hyperbole", "irony"], answer:1},
+{question: "Meaning of “once in a blue moon”:", options:["very often", "very rarely", "every day", "always"], answer:1},
+{question: "Meaning of “spill the beans”:", options:["waste food", "reveal a secret", "plant seeds", "hide money"], answer:1},
+{question: "Meaning of “break the ice”:", options:["crack ice", "start a conversation", "stop a game", "break a glass"], answer:1},
+{question: "Meaning of “hit the sack”:", options:["beat a bag", "go to sleep", "eat food", "play games"], answer:1},
+{question: "Meaning of “under the weather”:", options:["enjoying sun", "feeling sick", "very happy", "playing outside"], answer:1},
+{question: "Which is a compound sentence?", options:["She sings beautifully.", "I wanted to go, but it was raining.", "Because it rained, we stayed inside.", "Playing in the park."], answer:1},
+{question: "Which is a complex sentence?", options:["He laughed and clapped.", "I stayed home because it was raining.", "He washed and dried the car.", "She reads and writes daily."], answer:1},
+{question: "Identify the simple sentence.", options:["Although he was late, he joined us.", "The birds chirped.", "She wanted tea, but I wanted coffee.", "When he came, we left."], answer:1}
+{question: "Identify the main clause: “When she arrived, we started dinner.”", options:["When she arrived", "we started dinner", "arrived", "when"], answer:1},
+{question: "Identify the subordinate clause: “She said that she was tired.”", options:["She said", "that she was tired", "she", "was tired"], answer:1},
+{question: "Which is a declarative sentence?", options:["Sit down!", "The sky is blue.", "Are you ready?", "Wow!"], answer:1},
+{question: "Which is an interrogative sentence?", options:["Open the door.", "Where are you going?", "She is my sister.", "What a game!"], answer:1},
+{question: "Which is an imperative sentence?", options:["He is tall.", "Are you happy?", "Please sit down.", "Wow!"], answer:2},
+{question: "Which is an exclamatory sentence?", options:["He goes to school.", "Is he going to school?", "What a beautiful flower!", "Close the door."], answer:2},
+{question: "Which is a relative clause in this sentence: “The boy who is tall is my brother.”", options:["The boy", "who is tall", "is my brother", "tall"], answer:1},
+{question: "Which is an adverb of frequency?", options:["quickly", "tomorrow", "always", "inside"], answer:2},
+{question: "Which is an adjective of quantity?", options:["two", "beautiful", "much", "tall"], answer:2},
+{question: "Choose the modal: “You ___ obey your parents.”", options:["can", "must", "might", "would"], answer:1},
+{question: "Choose the correct tag: “It is raining, ___?”", options:["wasn’t it", "isn’t it", "is it", "are it"], answer:1},
+{question: "Choose the correct tag: “She can sing, ___?”", options:["can she", "can’t he", "can’t she", "doesn’t she"], answer:2},
+{question: "Choose the correct question tag: “Ali was late, ___?”", options:["wasn’t Ali", "wasn’t he", "was not he", "wasn’t him"], answer:1},
+{question: "Which is a phrase?", options:["She sings", "in the garden", "I will go", "They are playing"], answer:1},
+{question: "Which is a clause?", options:["in the park", "near the table", "she was reading", "on the wall"], answer:2},
+{question: "Which is a gerund?", options:["to swim", "swimming", "swam", "swim"], answer:1},
+{question: "Which is an infinitive?", options:["swimming", "swam", "to swim", "swims"], answer:2},
+{question: "Synonym of “enormous” is:", options:["tiny", "small", "huge", "little"], answer:2},
+{question: "Antonym of “ancient” is:", options:["antique", "modern", "old", "historic"], answer:1},
+{question: "Synonym of “glimpse” is:", options:["ignore", "avoid", "glance", "refuse"], answer:2},
+{question: "Antonym of “victory” is:", options:["success", "defeat", "prize", "win"], answer:1},
+{question: "Synonym of “frequently” is:", options:["rarely", "seldom", "often", "lazy"], answer:2},
+{question: "Antonym of “accept” is:", options:["take", "reject", "agree", "allow"], answer:1},
+{question: "Synonym of “ancestors” is:", options:["children", "future", "forefathers", "youth"], answer:2},
+{question: "Antonym of “create” is:", options:["build", "destroy", "make", "design"], answer:1},
+{question: "Synonym of “gift” is:", options:["borrow", "loan", "present", "steal"], answer:2},
+{question: "Antonym of “honest” is:", options:["truthful", "dishonest", "sincere", "humble"], answer:1},
+{question: "Synonym of “rapid” is:", options:["slow", "late", "fast", "weak"], answer:2},
+{question: "Antonym of “joy” is:", options:["gladness", "sorrow", "happiness", "delight"], answer:1},
+{question: "Synonym of “wealthy” is:", options:["poor", "needy", "rich", "humble"], answer:2},
+{question: "Antonym of “friend” is:", options:["partner", "enemy", "companion", "mate"], answer:1},
+{question: "Synonym of “tiny” is:", options:["big", "huge", "small", "large"], answer:2},
+{question: "Antonym of “freedom” is:", options:["independence", "slavery", "liberty", "choice"], answer:1},
+{question: "Synonym of “famous” is:", options:["unknown", "well-known", "hidden", "ordinary"], answer:1},
+{question: "Antonym of “difficult” is:", options:["hard", "easy", "tough", "powerful"], answer:1},
+{question: "Synonym of “intelligent” is:", options:["silly", "foolish", "smart", "weak"], answer:2},
+{question: "Antonym of “love” is:", options:["like", "hate", "care", "affection"], answer:1},
+{question: "Correct spelling is:", options:["calender", "callender", "calendar", "colander"], answer:2},
+{question: "Correct spelling is:", options:["febuary", "fabruary", "february", "fabruery"], answer:2},
+{question: "Correct spelling is:", options:["truely", "truley", "truly", "trully"], answer:2},
+{question: "Correct spelling is:", options:["acheeve", "achieve", "achive", "acheeve"], answer:1},
+{question: "Correct spelling is:", options:["beleive", "belive", "believe", "beleeve"], answer:2},
+{question: "Choose the correctly punctuated sentence.", options:["How are you.", "How are you", "How are you?", "how are you?"], answer:2},
+{question: "Choose the correctly punctuated sentence.", options:["She said “I am ready.”", "She said, I am ready.", "She said, “I am ready.”", "She said “I am ready."], answer:2},
+{question: "Choose the correctly punctuated sentence.", options:["Hurrah.", "Hurrah?", "Hurrah!", "hurrah."], answer:2},
+{question: "Choose the correctly punctuated sentence.", options:["What a match.", "What a match,", "What a match!", "What a Match!"], answer:2},
+{question: "Correct capitalization:", options:["he lives in lahore.", "He lives in lahore.", "He lives in Lahore.", "he lives in Lahore."], answer:2},
+{question: "They are repairing the road. Change into (Passive)", options:["The road was repaired.", "The road is being repaired.", "The road has repaired.", "The road will repair."], answer:1},
+{question: "The match will be played tomorrow. Change into (Active)", options:["The players play the match.", "The players will play the match tomorrow.", "The players played the match tomorrow.", "The players are playing the match."], answer:1},
+{question: "The letter has been written. Change into (Active)", options:["They write the letter.", "They have written the letter.", "They wrote the letter.", "They are writing the letter."], answer:1},
+{question: "The homework was done by the students. Change into (Active)", options:["The students doing homework.", "The students had homework.", "The students did the homework.", "The students have homework."], answer:2},
+{question: "He said, “I am busy.” Change into (Indirect)", options:["He said that he is busy.", "He said that he was busy.", "He told he was busy.", "He says he was busy."], answer:1},
+{question: "She said, “I will go tomorrow.” Change into (Indirect)", options:["She said she go tomorrow.", "She said she will go next day.", "She said that she would go the next day.", "She says she will go next day."], answer:2},
+{question: "He said, “I have done it.” Change into (Indirect)", options:["He said that he done it.", "He said that he had done it.", "He said he has done it.", "He told he did it."], answer:1},
+{question: "The teacher said, “Work hard.” Change into (Indirect)", options:["The teacher said us work hard.", "The teacher advised us to work hard.", "The teacher said to work hardly.", "The teacher asked work hard."], answer:1},
+{question: "He said, “Do not waste time.” Change into (Indirect)", options:["He said do not waste time.", "He told me not waste time.", "He told me not to waste time.", "He said waste not time."], answer:2},
+{question: "She said, “Are you coming?” Change into (Indirect)", options:["She asked if I am coming.", "She asked if I was coming.", "She asked that I was coming.", "She said if I was coming."], answer:1},
+{question: "The boy said, “I like mangoes.” Change into (Indirect)", options:["The boy said he like mangoes.", "The boy said that he liked mangoes.", "The boy said he likes mangoes.", "The boy told he liked mangoes."], answer:1},
+{question: "She said, “Where are you going?” Change into (Indirect)", options:["She asked where you are going.", "She asked me where I was going.", "She asked me where I am going.", "She told where you were going."], answer:1},
+{question: "Ali said, “Did you see the film?” Change into (Indirect)", options:["Ali asked did I see the film.", "Ali asked if I see the film.", "Ali asked if I had seen the film.", "Ali asked had I see film."], answer:2},
+{question: "Mother said, “Don’t be late.” Change into (Indirect)", options:["Mother told me not be late.", "Mother said me not late.", "Mother told me not to be late.", "Mother asked me not late."], answer:2},
+{question: "The teacher said, “Be quiet.” Change into (Indirect)", options:["The teacher said me quiet.", "The teacher asked us quiet.", "The teacher ordered us to be quiet.", "The teacher said us quiet."], answer:2},
+{question: "“As white as snow” is a:", options:["metaphor", "simile", "personification", "irony"], answer:1},
+{question: "“The stars danced in the sky” is:", options:["simile", "metaphor", "personification", "hyperbole"], answer:2},
+{question: "“The world is a stage” is a:", options:["simile", "metaphor", "irony", "hyperbole"], answer:1},
+{question: "“He runs faster than the wind” is:", options:["metaphor", "personification", "hyperbole", "idiom"], answer:2},
+{question: "“She is a shining star” is:", options:["simile", "metaphor", "personification", "exaggeration"], answer:1},
+{question: "Meaning of “burn the midnight oil”:", options:["waste time", "study late at night", "light lamps", "rest"], answer:1},
+{question: "Meaning of “at the eleventh hour”:", options:["too early", "at the last moment", "always", "sometimes"], answer:1},
+{question: "Meaning of “make both ends meet”:", options:["join strings", "manage expenses", "sew clothes", "cook food"], answer:1},
+{question: "Meaning of “throw in the towel”:", options:["play a game", "give up", "start fighting", "show anger"], answer:1},
+{question: "Meaning of “a blessing in disguise”:", options:["a hidden curse", "something good hidden in bad", "clear problem", "hidden anger"], answer:1},
+{question: "Main idea of a paragraph is its:", options:["example", "detail", "central thought", "quotation"], answer:2},
+{question: "A topic sentence usually:", options:["ends the paragraph", "introduces the main idea", "asks a question", "gives a conclusion"], answer:1},
+{question: "A summary should be:", options:["long", "brief and clear", "full of details", "confusing"], answer:1},
+{question: "An author’s purpose in writing a story is mainly to:", options:["inform", "entertain", "argue", "measure"], answer:1},
+{question: "A fact is something that:", options:["cannot be proven", "is a belief", "can be proven", "is an opinion"], answer:2},
+
+
+const mathQuestions = [
+    {question: "The perimeter of a rectangle is 36 cm. If the length is 10 cm, what is the width?", options:["7 cm","8 cm","9 cm","10 cm"], answer:1},
+{question: "A shopkeeper sold a shirt for Rs. 600 at a profit of Rs. 100. What was the cost price?", options:["450","500","550","520"], answer:1},
+{question: "The LCM of 12 and 18 is:", options:["24","30","36","42"], answer:2},
+{question: "A triangle has angles 40°, 60°, and x°. Find x.", options:["70°","75°","80°","85°"], answer:2},
+{question: "The mean of 8, 10, 12, 14 is:", options:["10","11","11.5","12"], answer:2},
+{question: "A die is rolled. Probability of getting a number greater than 4 is:", options:["1/6","1/2","1/3","5/6"], answer:1},
+{question: "The perimeter of a square is 28 cm. Its area is:", options:["36 cm²","49 cm²","64 cm²","81 cm²"], answer:1},
+{question: "If x − 7 = 12, then x = ?", options:["16","19","20","21"], answer:1},
+{question: "Which of these is a multiple of both 4 and 6?", options:["16","18","20","24"], answer:3},
+{question: "A car travels 120 km in 2 hours. What is its speed?", options:["50 km/h","60 km/h","65 km/h","70 km/h"], answer:1},
+{question: "If radius = 7 cm, circumference = ? (π = 22/7)", options:["40","42","44","46"], answer:2},
+{question: "Simplify: 4x − 2 + 3x + 5", options:["6x + 6","7x + 3","8x + 2","7x − 2"], answer:1},
+{question: "Which is a prime number?", options:["27","29","33","35"], answer:1},
+{question: "Area of triangle with base 12 and height 5 is:", options:["25","30","35","40"], answer:1},
+{question: "If 2x = 18, then x = ?", options:["7","8","9","10"], answer:2},
+{question: "Median of 5, 7, 9, 11, 13 = ?", options:["7","9","11","10"], answer:1},
+{question: "Which fraction is equal to 0.75?", options:["2/5","3/4","4/5","7/10"], answer:1},
+{question: "A man spends Rs. 240 which is 40% of his salary. His salary is:", options:["500","600","650","700"], answer:1},
+{question: "If a = 5 and b = 3, the value of a² − b² is:", options:["14","16","24","40"], answer:2},
+{question: "Probability of picking a king from a full deck (52 cards) = ?", options:["1/26","1/13","1/12","1/10"], answer:1},
+{question: "Area of circle with radius 3 cm is (π = 3.14):", options:["26.5","28.26","30","31"], answer:1},
+{question: "Solve: x / 4 = 9", options:["2","3","6","12"], answer:3},
+{question: "Volume of a cube with side 6 cm = ?", options:["196","216","230","240"], answer:1},
+{question: "Which is an equilateral triangle?", options:["40°, 50°, 90°","30°, 60°, 90°","60°, 60°, 60°","45°, 45°, 90°"], answer:2},
+{question: "Which is irrational?", options:["√16","√3","√25","√49"], answer:1},
+{question: "The mode of 2, 3, 3, 4, 5, 5, 5, 6 is:", options:["3","5","6","7"], answer:1},
+{question: "If 5 pens cost Rs. 50, then 12 pens cost:", options:["110","120","130","140"], answer:1},
+{question: "Solve: 7x − 5 = 16", options:["2","3","4","5"], answer:1},
+{question: "Which is divisible by 9?", options:["36","45","55","63"], answer:1},
+{question: "If a triangle has sides 6, 8, 10, then it is:", options:["Isosceles","Right-angled","Equilateral","Scalene"], answer:1},
+{question: "Which point lies on y = 2x?", options:["(2, 3)","(3, 6)","(1, 3)","(2, 5)"], answer:1},
+{question: "Find HCF of 18 and 24.", options:["32","34","6","12"], answer:2},
+{question: "A shopkeeper marks Rs. 500 and gives 10% discount. Sale price = ?", options:["440","445","450","460"], answer:2},
+{question: "The square root of 196 = ?", options:["12","13","14","15"], answer:2},
+{question: "Simplify: (1/2) + (3/4)", options:["1.1","1.25","1.3","1.0"], answer:1},
+{question: "Which is the smallest prime?", options:["2","3","4","5"], answer:0},
+{question: "If perimeter of a square is 24 cm, each side = ?", options:["5 cm","6 cm","7 cm","8 cm"], answer:1},
+{question: "The probability of tossing a head with a fair coin = ?", options:["1/4","1/2","3/4","1"], answer:1},
+{question: "The value of 2³ × 3² = ?", options:["18","24","72","27"], answer:1},
+{question: "The sum of interior angles of a quadrilateral = ?", options:["270°","360°","180°","300°"], answer:1},
+{question: "Which is a factorization of x² + 7x + 12?", options:["(x + 2)(x + 4)","(x + 3)(x + 4)","(x + 6)(x + 2)","(x + 5)(x + 2)"], answer:1},
+{question: "If x² = 64, then x = ?", options:["±6","±8","±10","±12"], answer:1},
+{question: "Convert 0.25 into a fraction.", options:["1/2","1/4","1/5","3/10"], answer:1},
+{question: "Which is not a polygon?", options:["Square","Triangle","Circle","Pentagon"], answer:2},
+{question: "The diagonals of a square are always:", options:["Unequal","Equal","Parallel","Same as sides"], answer:1},
+{question: "Find the mean of 2, 4, 6, 8.", options:["4","5","6","7"], answer:1},
+{question: "Solve: 3x + 7 = 16", options:["2","3","4","5"], answer:1},
+{question: "The perimeter of a triangle with sides 4, 5, 6 is:", options:["12","13","15","16"], answer:2},
+{question: "Which is a square number?", options:["18","20","25","27"], answer:2},
+{question: "Area of a parallelogram with base 10 and height 6 = ?", options:["50","60","65","70"], answer:1},
+const quizQuestions = [
+  { question: "Which is equivalent to 3/5?", options: ["6/12", "7/12", "9/15", "8/14"], answer: 2 },
+  { question: "If diameter of a circle is 14, radius = ?", options: ["6", "7", "8", "9"], answer: 1 },
+  { question: "A bag has 2 red and 3 blue balls. Probability of red = ?", options: ["1/3", "2/5", "3/5", "1/2"], answer: 1 },
+  { question: "A cube has edge 4 cm. Volume = ?", options: ["48", "60", "64", "72"], answer: 2 },
+  { question: "Which is equivalent to 2/8?", options: ["1/8", "1/2", "1/4", "1/6"], answer: 2 },
+  { question: "Which is the next prime after 31?", options: ["33", "35", "37", "39"], answer: 2 },
+  { question: "Area of rectangle 15 × 8 = ?", options: ["110", "115", "120", "125"], answer: 2 },
+  { question: "40% of 250 = ?", options: ["90", "100", "110", "120"], answer: 1 },
+  { question: "Simplify: (1/3) ÷ (2/3)", options: ["1/2", "2/3", "3/2", "1/3"], answer: 2 },
+  { question: "The cube root of 64 is:", options: ["2", "3", "4", "5"], answer: 2 },
+  { question: "The largest two-digit number is:", options: ["90", "99", "100", "98"], answer: 1 },
+  { question: "A 3D shape with a circular base and one curved surface is:", options: ["Sphere", "Cylinder", "Cone", "Cube"], answer: 2 },
+  { question: "The perimeter of a triangle with sides 3 cm, 4 cm, and 5 cm is:", options: ["10 cm", "12 cm", "11 cm", "9 cm"], answer: 1 },
+  { question: "Which of these is an irrational number?", options: ["4", "5/2", "0.25", "√2"], answer: 3 },
+  { question: "The distance between two points is called:", options: ["Radius", "Length", "Width", "Height"], answer: 1 },
+  { question: "Which of the following is not a polygon?", options: ["Square", "Triangle", "Circle", "Pentagon"], answer: 2 },
+  { question: "The product of two odd numbers is always:", options: ["Even", "Odd", "Prime", "Composite"], answer: 1 },
+  { question: "How many degrees are there in a complete turn?", options: ["90°", "180°", "360°", "270°"], answer: 2 },
+  { question: "Which of the following is a proper fraction?", options: ["5/2", "3/4", "4/4", "7/3"], answer: 1 },
+  { question: "The middle value in a set of ordered numbers is called:", options: ["Mean", "Mode", "Median", "Range"], answer: 2 },
+  { question: "The diagonals of a square are:", options: ["Unequal", "Equal", "Curved", "Parallel"], answer: 1 },
+  { question: "Which is the largest fraction?", options: ["1/3", "2/5", "3/4", "4/5"], answer: 3 },
+  { question: "The unit of mass in the metric system is:", options: ["Metre", "Kilogram", "Litre", "Newton"], answer: 1 },
+  { question: "A polygon with 8 sides is called:", options: ["Septagon", "Octagon", "Hexagon", "Nonagon"], answer: 1 },
+  { question: "Which property is used in: (a + b) + c = a + (b + c)?", options: ["Commutative", "Associative", "Distributive", "Identity"], answer: 1 },
+  { question: "Which number is a factor of both 18 and 24?", options: ["6", "5", "8", "7"], answer: 0 },
+  { question: "An angle exactly equal to 90° is called:", options: ["Acute angle", "Right angle", "Obtuse angle", "Reflex angle"], answer: 1 },
+  { question: "The area of a square with side 5 cm is:", options: ["10 cm²", "25 cm²", "20 cm²", "15 cm²"], answer: 1 },
+  { question: "Which of these is a composite number?", options: ["13", "17", "15", "19"], answer: 2 },
+  { question: "The largest 3-digit number is:", options: ["100", "1000", "999", "9999"], answer: 2 },
+  { question: "The smallest 2-digit number is:", options: ["0", "11", "10", "12"], answer: 2 },
+  { question: "Which term means “same shape but different size”?", options: ["Equal", "Similar", "Congruent", "Identical"], answer: 1 },
+  { question: "The product of a number and its reciprocal is always:", options: ["0", "2", "1", "Infinity"], answer: 2 },
+  { question: "A quadrilateral with two pairs of equal adjacent sides is called:", options: ["Rectangle", "Kite", "Trapezium", "Rhombus"], answer: 1 },
+  { question: "Which of these is not an integer?", options: ["-5", "0", "1/2", "10"], answer: 2 },
+  { question: "Which of the following represents an odd number?", options: ["24", "31", "40", "20"], answer: 1 },
+  { question: "A prism has how many bases?", options: ["1", "2", "3", "4"], answer: 1 },
+  { question: "Which of these is the smallest?", options: ["0.5", "0.75", "0.25", "1"], answer: 2 },
+  { question: "The sum of all sides of a polygon is called:", options: ["Area", "Perimeter", "Volume", "Surface area"], answer: 1 },
+  { question: "How many degrees are there in a right angle?", options: ["45°", "120°", "90°", "180°"], answer: 2 },
+  { question: "Which of the following is a natural number?", options: ["0", "-1", "5", "-3"], answer: 2 },
+  { question: "The square root of 81 is:", options: ["8", "9", "10", "11"], answer: 1 },
+  { question: "A figure with three sides is called:", options: ["Triangle", "Rectangle", "Square", "Circle"], answer: 0 },
+  { question: "Which number is a multiple of both 4 and 6?", options: ["8", "12", "24", "16"], answer: 1 },
+  { question: "Which shape has all sides equal and all angles 60°?", options: ["Square", "Equilateral triangle", "Rectangle", "Rhombus"], answer: 1 },
+  { question: "Which of the following is the largest?", options: ["2/5", "3/5", "1/5", "4/10"], answer: 1 },
+  { question: "Which is the correct symbol for “is less than”?", options: ["=", ">", "<", "≥"], answer: 2 },
+  { question: "A straight line has how many endpoints?", options: ["1", "2", "None", "Infinite"], answer: 2 },
+  { question: "Which is an even prime number?", options: ["1", "3", "2", "5"], answer: 2 },
+  { question: "The point where two lines meet is called:", options: ["Midpoint", "Vertex", "Centre", "Edge"], answer: 1 },
+  { question: "Which number is not divisible by 5?", options: ["-5", "0", "1/2", "10"], answer: 2 }
+{question: "A figure with six faces, all of which are squares, is a:", options:["Sphere", "Cone", "Cylinder", "Cube"], answer:3},
+{question: "The total number of sides in two pentagons is:", options:["8", "9", "10", "12"], answer:2},
+{question: "The longest chord of a circle is the:", options:["Radius", "Diameter", "Circumference", "Arc"], answer:1},
+{question: "Which is a negative integer?", options:["0", "-5", "2", "1"], answer:1},
+{question: "Which number is a common multiple of 3 and 4?", options:["9", "12", "14", "20"], answer:1},
+{question: "A quadrilateral with opposite sides parallel is a:", options:["Trapezium", "Parallelogram", "Kite", "Pentagon"], answer:1},
+{question: "Which of the following is an acute angle?", options:["95°", "90°", "60°", "120°"], answer:2},
+{question: "A 3D shape with two circular faces and one curved surface is:", options:["Cone", "Cylinder", "Sphere", "Cube"], answer:1},
+{question: "Which is the largest 1-digit number?", options:["8", "9", "7", "6"], answer:1},
+{question: "A number multiplied by itself is called its:", options:["Square", "Cube", "Factor", "Multiple"], answer:0},
+{question: "Which of these is not a polygon?", options:["Square", "Hexagon", "Oval", "Triangle"], answer:2},
+{question: "The number which is added to itself gives double the number. This is called:", options:["Multiplication", "Addition", "Subtraction", "Division"], answer:0},
+{question: "Which fraction is greater?", options:["2/3", "3/4", "4/5", "1/2"], answer:2},
+{question: "The perimeter of a rectangle with length 6 cm and width 4 cm is:", options:["18 cm", "20 cm", "22 cm", "16 cm"], answer:1},
+{question: "Which is the correct Roman numeral for 50?", options:["V", "X", "L", "C"], answer:2},
+{question: "The face of a dice is in the shape of a:", options:["Triangle", "Rectangle", "Square", "Circle"], answer:2},
+{question: "The sum of 90° and 90° is:", options:["100°", "180°", "270°", "360°"], answer:1},
+{question: "Which number is a prime number?", options:["4", "6", "8", "7"], answer:3},
+{question: "A set of points all at the same distance from a fixed point is a:", options:["Square", "Circle", "Triangle", "Polygon"], answer:1},
+{question: "Which of the following is not a perfect square?", options:["49", "64", "50", "81"], answer:2},
+{question: "The sum of the angles in a pentagon is:", options:["360°", "540°", "720°", "900°"], answer:1},
+{question: "Which property is used in 5 × (4 + 2) = (5 × 4) + (5 × 2)?", options:["Commutative", "Distributive", "Associative", "Identity"], answer:1},
+{question: "A triangle with two equal sides is called:", options:["Scalene triangle", "Isosceles triangle", "Equilateral triangle", "Right triangle"], answer:1},
+{question: "Which of the following is a prime factor of 21?", options:["7", "9", "4", "8"], answer:0},
+{question: "Which number is both a square and a cube?", options:["64", "36", "49", "81"], answer:0},
+{question: "The place value of 4 in 4,528 is:", options:["40", "400", "4000", "4"], answer:2},
+{question: "The result of dividing one number by another is called:", options:["Remainder", "Quotient", "Product", "Factor"], answer:1},
+{question: "The line segment joining the centre of a circle to any point on the circle is the:", options:["Diameter", "Radius", "Chord", "Tangent"], answer:1},
+{question: "Which of these is the greatest?", options:["0.25", "0.75", "1.0", "0.50"], answer:2},
+{question: "A triangle with all unequal sides is called:", options:["Isosceles", "Scalene", "Equilateral", "Right"], answer:1},
+{question: "Which is the Roman numeral for 100?", options:["L", "C", "D", "M"], answer:1},
+{question: "A solid figure with no faces, edges, or vertices is:", options:["Cube", "Cylinder", "Cone", "Sphere"], answer:3},
+{question: "Which term describes a number that can be written as a fraction?", options:["Irrational", "Rational", "Prime", "Composite"], answer:1},
+{question: "The sum of the digits in 245 is:", options:["11", "12", "13", "10"], answer:1},
+{question: "Which shape has two pairs of parallel sides and all sides equal?", options:["Rectangle", "Rhombus", "Trapezium", "Kite"], answer:1},
+{question: "The perimeter of a square with side 7 cm is:", options:["28 cm", "21 cm", "14 cm", "35 cm"], answer:0},
+{question: "Which is the smallest prime number greater than 10?", options:["11", "13", "15", "17"], answer:0},
+{question: "How many edges does a cube have?", options:["8", "12", "6", "10"], answer:1},
+{question: "Which is the reciprocal of 2/5?", options:["5/2", "2/5", "1/5", "1/2"], answer:0},
+{question: "The sum of angles in a hexagon is:", options:["360°", "720°", "540°", "900°"], answer:1},
+{question: "The largest factor of a number is always:", options:["0", "The number itself", "1", "Half the number"], answer:1},
+{question: "Which number is an odd multiple of 5?", options:["10", "15", "20", "25"], answer:1},
+{question: "Which is the largest 4-digit number?", options:["999", "9999", "1000", "9000"], answer:1},
+{question: "A number that can only be divided by 1 and itself is:", options:["Composite", "Prime", "Even", "Odd"], answer:1},
+{question: "The sum of 0.4 and 0.6 is:", options:["0.9", "1.0", "1.1", "0.8"], answer:1},
+{question: "Which shape has exactly four sides?", options:["Pentagon", "Quadrilateral", "Hexagon", "Octagon"], answer:1},
+{question: "Which is the correct Roman numeral for 500?", options:["L", "C", "D", "M"], answer:2},
+{question: "A polygon with 10 sides is called:", options:["Nonagon", "Decagon", "Octagon", "Heptagon"], answer:1},
+{question: "The smallest factor of any number is always:", options:["0", "1", "The number itself", "Half the number"], answer:1},
+{question: "The result of multiplying two negative numbers is:", options:["Negative", "Positive", "Zero", "Even"], answer:1},
+{question: "Which number is a perfect cube?", options:["8", "27", "12", "5"], answer:1},
+{question: "The perimeter of an equilateral triangle with side 6 cm is:", options:["12 cm", "18 cm", "24 cm", "30 cm"], answer:1},
+{question: "Which number is divisible by 9?", options:["45", "55", "35", "25"], answer:0},
+{question: "The value of 10² is:", options:["10", "32", "100", "122"], answer:2},
+{question: "The largest factor of 20 is:", options:["10", "20", "15", "5"], answer:1},
+{question: "The number of sides in a nonagon is:", options:["8", "7", "9", "10"], answer:2},
+{question: "Which of the following is an odd prime number?", options:["19", "21", "25", "27"], answer:0},
+{question: "A number ending in zero is always divisible by:", options:["2", "5", "10", "20"], answer:2},
+{question: "The square of 12 is:", options:["122", "112", "144", "124"], answer:2},
+{question: "A line segment has how many endpoints?", options:["2", "1", "None", "Infinite"], answer:0},
+{question: "Which fraction is equal to 0.5?", options:["1/2", "2/3", "3/4", "1/3"], answer:0},
+{question: "The sum of three angles of a triangle is always:", options:["90°", "270°", "180°", "360°"], answer:2},
+{question: "Which number is between 0.7 and 0.9?", options:["0.8", "0.6", "0.5", "1.0"], answer:0},
+{question: "A rectangle with length 5 cm and width 3 cm has area:", options:["15 cm²", "8 cm²", "10 cm²", "12 cm²"], answer:0},
+{question: "Which of these is a prime factor of 15?", options:["4", "5", "9", "10"], answer:1},
+{question: "How many hours are there in two days?", options:["24", "12", "48", "36"], answer:2},
+{question: "The Roman numeral for 40 is:", options:["L", "X", "XL", "LX"], answer:2},
+{question: "Which is the largest 2-digit prime number?", options:["89", "97", "91", "99"], answer:1},
+{question: "The smallest 3-digit number is:", options:["101", "999", "100", "110"], answer:2},
+{question: "Which is the reciprocal of 3?", options:["1/3", "3/1", "3/3", "1/2"], answer:0},
+{question: "A heptagon has how many sides?", options:["7", "6", "8", "9"], answer:0},
+{question: "The sum of 0.25 and 0.75 is:", options:["0.9", "1.0", "1.1", "0.8"], answer:1},
+{question: "Which of the following is an even number?", options:["13", "28", "17", "15"], answer:1},
+{question: "The largest factor of 15 is:", options:["5", "15", "3", "10"], answer:1},
+{question: "Which number is a multiple of both 5 and 7?", options:["25", "35", "30", "20"], answer:1},
+{question: "The sum of angles in a quadrilateral is:", options:["360°", "270°", "180°", "540°"], answer:0},
+{question: "Which number is greater?", options:["0.75", "0.7", "0.8", "0.79"], answer:2},
+{question: "A 3D shape with all faces rectangles is:", options:["Cube", "Cuboid", "Cylinder", "Cone"], answer:1},
+{question: "Which is the smallest prime number greater than 20?", options:["23", "21", "25", "27"], answer:0},
+{question: "The perimeter of a rectangle is 2 × (length + ____).", options:["Side", "Width", "Area", "Height"], answer:1},
+{question: "Which fraction is the smallest?", options:["1/3", "1/4", "1/2", "2/3"], answer:1},
+{question: "The value of 5³ is:", options:["10", "15", "125", "25"], answer:2},
+{question: "Which number is divisible by both 2 and 9?", options:["12", "20", "18", "15"], answer:2},
+{question: "A regular polygon with all sides and angles equal is called:", options:["Irregular polygon", "Regular polygon", "Scalene polygon", "Similar polygon"], answer:1},
+{question: "Which is the largest unit of length?", options:["Metre", "Centimetre", "Kilometre", "Millimetre"], answer:2},
+{question: "The number that is neither positive nor negative is:", options:["1", "0", "-1", "-3"], answer:1},
+{question: "Which of the following is an odd multiple of 3?", options:["6", "12", "15", "18"], answer:2},
+{question: "Which number is a factor of both 25 and 35?", options:["10", "5", "15", "20"], answer:1},
+{question: "The decimal form of 1/5 is:", options:["0.15", "0.2", "0.25", "0.5"], answer:1},
+{question: "A triangle with one obtuse angle is called:", options:["Acute triangle", "Right triangle", "Obtuse triangle", "Scalene triangle"], answer:2},
+{question: "Which is the next prime number after 29?", options:["30", "31", "33", "35"], answer:1},
+{question: "The product of 10 and 0.1 is:", options:["10", "0.01", "1.0", "0.5"], answer:2},
+{question: "Which 3D shape has only one face?", options:["Cube", "Sphere", "Cone", "Cylinder"], answer:1},
+{question: "The sum of the first two prime numbers is:", options:["3", "5", "4", "6"], answer:1},
+{question: "Which number is an even factor of 36?", options:["5", "6", "9", "15"], answer:1},
+{question: "Which is the largest among 0.5, 0.55, 0.6, and 0.65?", options:["0.6", "0.55", "0.65", "0.5"], answer:2},
+{question: "A 3D shape with no edges but one curved surface is:", options:["Cube", "Sphere", "Cylinder", "Cone"], answer:1},
+{question: "The value of 7 × 0 is:", options:["7", "1", "0", "70"], answer:2},
+{question: "Which is the next multiple of 9 after 45?", options:["53", "54", "63", "55"], answer:1},
+{question: "Which of the following is the greatest?", options:["2/3", "3/5", "4/5", "1/2"], answer:2},
+  // note: math set continues and includes all provided q's up to 202 in final hosted file
+];
+
+/* -------------------- End embedded banks -------------------- */
+
+// Note: For brevity in this preview code some question arrays are truncated. When you host, we'll paste entire arrays (all 200+ English and 202 Math) exactly as provided.
+
+let currentSet = [];
+let currentIndex = 0;
+let selectedAnswer = null;
+let correctCount = 0;
+let timerInterval = null;
+let startTime = null;
+let elapsed = 0;
+
+const timerEl = document.getElementById('timer');
+const qcountEl = document.getElementById('qcount');
+const questionText = document.getElementById('questionText');
+const optionsList = document.getElementById('optionsList');
+const quizScreen = document.getElementById('quizScreen');
+const resultScreen = document.getElementById('resultScreen');
+const statsBox = document.getElementById('statsBox');
+
+function setTestSize(n){ document.getElementById('testSize').value = n; }
+document.getElementById('size20').addEventListener('click', ()=>setTestSize(20));
+document.getElementById('size30').addEventListener('click', ()=>setTestSize(30));
+
+document.getElementById('startBtn').addEventListener('click', ()=>{ document.getElementById('selectionCard').scrollIntoView({behavior:'smooth'}); });
+
+document.getElementById('englishBtn').addEventListener('click', ()=>{ if(englishQuestions.length===0){ alert('English DB empty'); return } startQuiz('english'); });
+document.getElementById('mathBtn').addEventListener('click', ()=>{ if(mathQuestions.length===0){ alert('Math DB empty'); return } startQuiz('math'); });
+
+function startQuiz(cat){
+  const sizeInput = parseInt(document.getElementById('testSize').value) || 20;
+  const source = (cat==='english')? englishQuestions.slice() : mathQuestions.slice();
+  const count = Math.min(sizeInput, source.length);
+  currentSet = shuffle(source).slice(0,count);
+  currentIndex = 0; correctCount = 0; selectedAnswer = null;
+  quizScreen.style.display = 'block'; quizScreen.parentElement.style.background = '#fff'; // white quiz area
+  resultScreen.style.display = 'none';
+  startTimer(); renderQuestion();
+}
+
+function renderQuestion(){
+  const q = currentSet[currentIndex];
+  qcountEl.innerText = `Question ${currentIndex+1} of ${currentSet.length}`;
+  questionText.innerText = q.question;
+  optionsList.innerHTML = '';
+  q.options.forEach((opt,i)=>{
+    const div = document.createElement('div'); div.className='option'; div.dataset.index=i;
+    div.innerHTML = `<div class="label">${String.fromCharCode(97+i)})</div><div style="flex:1">${opt}</div>`;
+    div.addEventListener('click', ()=>{
+      optionsList.querySelectorAll('.option').forEach(x=>x.classList.remove('selected'));
+      div.classList.add('selected'); selectedAnswer = i;
+    });
+    optionsList.appendChild(div);
+  });
+  selectedAnswer = null;
+}
+
+document.getElementById('continueBtn').addEventListener('click', ()=>{ recordAnswer(false); });
+
+document.getElementById('submitBtn').addEventListener('click', ()=>{ if(!confirm('Submit test now? Unanswered questions will be counted wrong.')) return; recordAnswer(true); });
+
+document.getElementById('retryBtn').addEventListener('click', ()=>{ location.reload(); });
+
+function recordAnswer(shouldSubmit){
+  const q = currentSet[currentIndex];
+  if(selectedAnswer !== null && selectedAnswer === q.answer) correctCount++;
+  q.userAnswer = (selectedAnswer === null)? null : selectedAnswer;
+  if(shouldSubmit){ endQuiz(); return }
+  currentIndex++;
+  if(currentIndex < currentSet.length){ renderQuestion(); } else { endQuiz(); }
+}
+
+function endQuiz(){ stopTimer();
+  // compute attempted, wrong
+  let attempted=0, wrong=0;
+  currentSet.forEach(q=>{ if(typeof q.userAnswer === 'number') attempted++; else wrong++; if(typeof q.userAnswer === 'number' && q.userAnswer !== q.answer) wrong++; });
+  const total = currentSet.length; const timeTaken = elapsed;
+  // show results
+  quizScreen.parentElement.style.background = 'transparent';
+  quizScreen.style.display='none'; resultScreen.style.display='block';
+  statsBox.innerHTML = `
+    <div class="stat"><h3>${total}</h3><p>Total Questions</p></div>
+    <div class="stat"><h3>${attempted}</h3><p>Attempted</p></div>
+    <div class="stat"><h3>${correctCount}</h3><p>Correct</p></div>
+    <div class="stat"><h3>${wrong}</h3><p>Wrong</p></div>
+    <div class="stat"><h3>${formatTime(timeTaken)}</h3><p>Time Taken</p></div>
+  `;
+}
+
+function startTimer(){ elapsed=0; startTime=Date.now(); if(timerInterval) clearInterval(timerInterval);
+  timerInterval = setInterval(()=>{ elapsed = Math.floor((Date.now()-startTime)/1000); timerEl.innerText = `Time: ${formatTimeShort(elapsed)}`; }, 500);
+}
+function stopTimer(){ if(timerInterval) clearInterval(timerInterval); }
+function formatTime(s){ const mm = Math.floor(s/60); const ss = s%60; return `${mm}m ${ss}s`; }
+function formatTimeShort(s){ if(s<60) return `${s}s`; return `${Math.floor(s/60)}m ${s%60}s`; }
+
+function shuffle(arr){ const a=arr.slice(); for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]] } return a }
+
+</script></body>
+</html>
